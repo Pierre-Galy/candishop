@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "685615486776",
+    "firebase_url": "https://candi-a9d80.firebaseio.com",
+    "project_id": "candi-a9d80",
+    "storage_bucket": "candi-a9d80.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685615486776:android:b7f7be4dec1bb2f7d553cd",
+        "android_client_info": {
+          "package_name": "com.example.candi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685615486776-4275mt296h2aov6t8ggl1l4de75pb9eh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIT4eSysEru07VSB4XGwD-Ok3myyEKIkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685615486776-4275mt296h2aov6t8ggl1l4de75pb9eh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "685615486776-nnt3frc66mt65skifdoi2ctohrsketgm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.candi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
