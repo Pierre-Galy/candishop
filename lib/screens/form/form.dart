@@ -128,7 +128,7 @@ class _WishPageState extends State<FormPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
               backgroundColor: Colors.blueGrey[900],
               title: Text('Evènements'),
               actions: [
@@ -138,7 +138,7 @@ class _WishPageState extends State<FormPage> {
                   onPressed: () => Navigator.pushNamed(context, '/profile'),
                 )
               ],
-            ),
+            ),*/
         body: _showForm()
     );
   }

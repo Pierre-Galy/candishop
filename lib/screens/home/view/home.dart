@@ -38,14 +38,14 @@ class _FutureBuilderWidgetState extends State<HomePage> {
            SlidingUpPanel(
             defaultPanelState: PanelState.CLOSED,
             controller: pcontainer,
-            minHeight: 0,
-            maxHeight: 730,
+            minHeight: 50,
+            maxHeight: 200,
             backdropEnabled: true,
-            backdropOpacity: 0.7,
+            backdropOpacity: 0,
             borderRadius: radius,
             panel: Center(child: FormPage()),
             collapsed: Container(decoration: BoxDecoration(color: Colors.blue, borderRadius: radius),
-            child: Center(child: Text('Ajouter un projet', style: TextStyle(color: Colors.blue),),),
+            child: Center(child: Text('Ajouter un projet', style: TextStyle(color: Colors.white),),),
             ),
             body: 
             Scaffold(
@@ -61,12 +61,8 @@ class _FutureBuilderWidgetState extends State<HomePage> {
               ],
             ),
               drawer: TopicDrawer(topics: snap.data),
-              body: ListView(
-                primary: false,
-                padding: const EdgeInsets.all(30.0),
-                children: topics.map((topic) => TopicItem(topic: topic)).toList(),
-              ),
-              bottomNavigationBar: AppBottomNav(),
+              body: MapSample(),
+              
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
                     //Navigator.of(context).push(_createRoute());
@@ -85,6 +81,7 @@ class _FutureBuilderWidgetState extends State<HomePage> {
               ),
             )
           ),
+          bottomNavigationBar: AppBottomNav(),
           );
         } else {
           return LoadingScreen();
