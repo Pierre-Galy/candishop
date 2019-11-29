@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginSignupPage extends StatefulWidget {
-
   LoginSignupPage({this.auth, this.loginCallback});
 
   final BaseAuth auth;
@@ -16,7 +15,6 @@ class LoginSignupPage extends StatefulWidget {
 }
 
 class _LoginSignupPageState extends State<LoginSignupPage> {
-
   final _formKey = new GlobalKey<FormState>();
   String _email;
   String _password;
@@ -49,7 +47,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           userId = await widget.auth.signIn(_email, _password);
           print('Signed in: $userId');
         } else {
-          userId = await widget.auth.signUp(_email, _password, _firstName, _lastName);
+          userId = await widget.auth
+              .signUp(_email, _password, _firstName, _lastName);
           //widget.auth.sendEmailVerification();
           //_showVerifyEmailSentDialog();
           print('Signed up user: $userId');
@@ -187,7 +186,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   }
 
   Widget showLastNameInput() {
-    if (!_isLoginForm){
+    if (!_isLoginForm) {
       return Padding(
         padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
         child: new TextFormField(
@@ -212,7 +211,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   }
 
   Widget showFirstNameInput() {
-    if (!_isLoginForm){
+    if (!_isLoginForm) {
       return Padding(
         padding: const EdgeInsets.fromLTRB(0.0, 80.0, 0.0, 0.0),
         child: new TextFormField(
@@ -258,11 +257,13 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget showSecondaryButton() {
     return new FlatButton(
         child: new Text(
-            _isLoginForm ? 'Créer un compte' : 'Avez-vous déjà un compte? Connexion',
+            _isLoginForm
+                ? 'Créer un compte'
+                : 'Avez-vous déjà un compte? Connexion',
             style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
         onPressed: toggleFormMode);
   }
-  
+
   Widget showPrimaryButton() {
     return new Padding(
         padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),

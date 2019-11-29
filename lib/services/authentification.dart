@@ -5,7 +5,8 @@ import 'models.dart';
 
 abstract class BaseAuth {
   Future<String> signIn(String email, String password);
-  Future<String> signUp(String email, String password, String firstname, String lastname);
+  Future<String> signUp(
+      String email, String password, String firstname, String lastname);
   Future<FirebaseUser> getCurrentUser();
   Future<void> signOut();
 }
@@ -19,11 +20,12 @@ class Auth extends BaseAuth {
   Stream<FirebaseUser> get user => _firebaseAuth.onAuthStateChanged;
 
   Future<FirebaseUser> onRegistration(String email, String password) async {
-    AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+    AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
     FirebaseUser user = result.user;
     return user;
-  }  
-  
+  }
+
   @override
   Future<String> signIn(String email, String password) async {
     AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
@@ -40,25 +42,25 @@ class Auth extends BaseAuth {
       'lastname': lastname,
       'lastActivity': DateTime.now(),
     }, merge: true);
-  } 
+  }
 
   Future<void> signOut() {
     return _firebaseAuth.signOut();
   }
 
   @override
-  Future<FirebaseUser> getCurrentUser() async{
+  Future<FirebaseUser> getCurrentUser() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
     return user;
   }
 
   @override
-  Future<String> signUp(String email, String password, String firstname, String lastname) async{
-   AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
+  Future<String> signUp(
+      String email, String password, String firstname, String lastname) async {
+    AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
     FirebaseUser user = result.user;
     updateUserData(user.uid, firstname, lastname);
     return user.uid;
   }
-
 }

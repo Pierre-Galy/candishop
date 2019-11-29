@@ -6,82 +6,62 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+
 class HomePage extends StatefulWidget {
+  
+  HomePage();
 
   @override
   _FutureBuilderWidgetState createState() => _FutureBuilderWidgetState();
 }
 
 class _FutureBuilderWidgetState extends State<HomePage> {
-
-  PanelController pcontainer = new PanelController();
-
-   @override
+  
+  @override
   void initState() {
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
 
     BorderRadiusGeometry radius = BorderRadius.only(
-      topLeft: Radius.circular(24), topRight: Radius.circular(24)
-    );
-    
+        topLeft: Radius.circular(24), topRight: Radius.circular(24));
+
     return FutureBuilder(
-      future: Global.topicsRef.getData(),
+      future: Global.appliantsLocation.getData(),
       builder: (BuildContext context, AsyncSnapshot snap) {
         if (snap.hasData) {
-          List<Topic> topics = snap.data;
+          List<UserLocation> locations = snap.data;
           return Scaffold(
-           body: 
-           SlidingUpPanel(
-            defaultPanelState: PanelState.CLOSED,
-            controller: pcontainer,
-            minHeight: 50,
-            maxHeight: 200,
-            backdropEnabled: true,
-            backdropOpacity: 0,
-            borderRadius: radius,
-            panel: Center(child: FormPage()),
-            collapsed: Container(decoration: BoxDecoration(color: Colors.blue, borderRadius: radius),
-            child: Center(child: Text('Ajouter un projet', style: TextStyle(color: Colors.white),),),
-            ),
-            body: 
-            Scaffold(
-              appBar: AppBar(
-              backgroundColor: Colors.blueGrey[900],
-              title: Text('Evènements'),
-              actions: [
-                IconButton(
-                  icon: Icon(FontAwesomeIcons.userCircle,
-                      color: Colors.white),
-                  onPressed: () => Navigator.pushNamed(context, '/profile'),
-                )
-              ],
-            ),
-              drawer: TopicDrawer(topics: snap.data),
-              body: MapSample(),
-              
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                    //Navigator.of(context).push(_createRoute());
-                  //showFancyCustomDialog(context);
-                    if (pcontainer.isPanelClosed()){
-                      pcontainer.open();
-                    } else {
-                      pcontainer.close();
-                    }
-                },
-                tooltip: 'Increment',
-                child: Icon(Icons.add),
-                backgroundColor: Colors.blueGrey[900],
-                mini: false,
-                isExtended: true,
-              ),
-            )
-          ),
-          bottomNavigationBar: AppBottomNav(),
+            body: Scaffold(
+                  appBar: AppBar(
+                    backgroundColor: Colors.blueGrey[900],
+                    title: Text('Candi'),
+                    actions: [
+                      IconButton(
+                        icon: Icon(FontAwesomeIcons.userCircle,
+                            color: Colors.white),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/profile'),
+                      )
+                    ],
+                  ),
+                  //drawer: TopicDrawer(topics: snap.data),
+                  //MapAppliants(appliants: snap.data, pcontainer: pcontainer),
+                  body: MapAppliants(appliants: snap.data),
+                  /*floatingActionButton: FloatingActionButton(
+                    onPressed: () {
+                      
+                    },
+                    tooltip: 'Increment',
+                    child: Icon(Icons.add),
+                    backgroundColor: Colors.blueGrey[900],
+                    mini: false,
+                    isExtended: true,
+                  ),*/
+                ),
+            bottomNavigationBar: AppBottomNav(),
           );
         } else {
           return LoadingScreen();
@@ -90,83 +70,18 @@ class _FutureBuilderWidgetState extends State<HomePage> {
     );
   }
 }
+
 void swipeUp(PanelController state) {
-  if (state.isPanelClosed()){
+  if (state.isPanelClosed()) {
     state.open();
   } else {
     state.close();
   }
 }
-void showFancyCustomDialog(BuildContext context) {
-    Dialog fancyDialog = Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child:  Scaffold(
-            appBar: new AppBar(
-                title: new Text('Ajouter un projet'),
-            ),
-            body: new Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                    new Expanded(
-                        child: new Material(
-                            color: Colors.red,
-                            child: new Container(
-                              color: Colors.white,
-                              padding: new EdgeInsets.all(40.0),
-                              child: new ListView(children: <Widget>[ 
-                                TextFormField(
-                                maxLines: 1,
-                                keyboardType: TextInputType.text,
-                                autofocus: false,
-                                decoration: new InputDecoration(
-                                    border: UnderlineInputBorder(),
-                                    labelText: 'Nom du projet',
-                                    hintText: 'Nom du projet',
-                                    ),
-                                validator: (value) => value.isEmpty ? 'Prénom est manquant' : null,
-                                //onSaved: (value) => _firstName = value.trim(),
-                              ),
-                              TextFormField(
-                                maxLines: 1,
-                                keyboardType: TextInputType.text,
-                                autofocus: false,
-                                decoration: new InputDecoration(
-                                    border: UnderlineInputBorder(),
-                                    labelText: 'Description',
-                                    hintText: 'Description',
-                                    ),
-                                validator: (value) => value.isEmpty ? 'Prénom est manquant' : null,
-                                //onSaved: (value) => _firstName = value.trim(),
-                              )
-                              ]),
-                            ),
-                        ),
-                    ),
-                    new Padding(
-                      padding: EdgeInsets.fromLTRB(0.0, 0.0, 00.0, 0.0),
-                      child: SizedBox(
-                        height: 50.0,
-                        width: double.infinity,
-                        child: new RaisedButton(
-                          elevation: 5.0,
-                          color: Colors.blue,
-                          child: new Text('Valider',
-                              style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-                          onPressed: _createRoute,
-                        ),
-                      ))
-                ],
-            ),
-        )
-    );
-    showDialog(
-        context: context, builder: (BuildContext context) => fancyDialog);
- }
+
 void showPageSwipUp(BuildContext context) {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Material(
       child: SlidingUpPanel(
         backdropEnabled: true,
@@ -177,7 +92,7 @@ void showPageSwipUp(BuildContext context) {
           appBar: AppBar(
             title: Text("SlidingUpPanelExample"),
           ),
-          body:  Center(
+          body: Center(
             child: Text("This is the Widget behind the sliding panel"),
           ),
         ),
@@ -185,22 +100,7 @@ void showPageSwipUp(BuildContext context) {
     );
   }
 }
-//Motor of enter/exit modal
-Route _createRoute() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => FormPage(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var begin = Offset(0.0, 1.0);
-      var end = Offset.zero;
-      var curve = Curves.ease;
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
-}
+
 class Page2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
@@ -213,77 +113,83 @@ class Page2 extends StatelessWidget {
     );
   }
 }
+
 class MyWiget2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
+      appBar: new AppBar(
         title: new Text('Proposer votre souhait'),
         actions: <Widget>[
-           new IconButton(
-             alignment: Alignment.topLeft,
-             icon: new Icon(Icons.close),
+          new IconButton(
+            alignment: Alignment.topLeft,
+            icon: new Icon(Icons.close),
             onPressed: () => Navigator.of(context).pop(null),
-           ),
-         ],
+          ),
+        ],
         leading: new Container(),
       ),
-        body: Screen2(),
-        );
+      body: Screen2(),
+    );
   }
 }
+
 class Screen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
       decoration: new BoxDecoration(color: Colors.white),
-        padding: EdgeInsets.all(16.0),
-          //key: _formKey,
-          child: new ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              showLastNameInput(),
-            ],
-          ),
-        );
+      padding: EdgeInsets.all(16.0),
+      //key: _formKey,
+      child: new ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          showLastNameInput(),
+        ],
+      ),
+    );
   }
 }
+
 Widget showLastNameInput() {
-        return SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-               Center(
-                child: Card(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+  return SingleChildScrollView(
+    child: Column(
+      children: <Widget>[
+        Center(
+          child: Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const ListTile(
+                  leading: Icon(Icons.album),
+                  title: Text('The Enchanted Nightingale'),
+                  subtitle:
+                      Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
+                ),
+                ButtonTheme.bar(
+                  // make buttons use the appropriate styles for cards
+                  child: ButtonBar(
                     children: <Widget>[
-                      const ListTile(
-                        leading: Icon(Icons.album),
-                        title: Text('The Enchanted Nightingale'),
-                        subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
+                      FlatButton(
+                        child: const Text('BUY TICKETS'),
+                        onPressed: () {/* ... */},
                       ),
-                      ButtonTheme.bar( // make buttons use the appropriate styles for cards
-                        child: ButtonBar(
-                          children: <Widget>[
-                            FlatButton(
-                              child: const Text('BUY TICKETS'),
-                              onPressed: () { /* ... */ },
-                            ),
-                            FlatButton(
-                              child: const Text('LISTEN'),
-                              onPressed: () { /* ... */ },
-                            ),
-                          ],
-                        ),
+                      FlatButton(
+                        child: const Text('LISTEN'),
+                        onPressed: () {/* ... */},
                       ),
                     ],
                   ),
                 ),
-  )
-            ],
+              ],
+            ),
           ),
-        );
-  }
+        )
+      ],
+    ),
+  );
+}
+
 //Motor of short route
 class EnterExitRoute extends PageRouteBuilder {
   final Widget enterPage;
@@ -302,10 +208,10 @@ class EnterExitRoute extends PageRouteBuilder {
             Animation<double> secondaryAnimation,
             Widget child,
           ) =>
-               FadeTransition(
-                opacity: animation,
-                child: child,
-              ),
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
         );
 }
 
@@ -342,7 +248,8 @@ class TopicItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(left: 15, right: 20, top: 20, bottom: 0),
+                        padding: EdgeInsets.only(
+                            left: 15, right: 20, top: 20, bottom: 0),
                         child: Text(
                           topic.title,
                           style: TextStyle(
@@ -365,6 +272,7 @@ class TopicItem extends StatelessWidget {
     );
   }
 }
+
 class TopicScreen extends StatelessWidget {
   final Topic topic;
   TopicScreen({this.topic});
@@ -390,6 +298,7 @@ class TopicScreen extends StatelessWidget {
     );
   }
 }
+
 class QuizList extends StatelessWidget {
   final Topic topic;
   QuizList({Key key, this.topic});
@@ -429,6 +338,7 @@ class QuizList extends StatelessWidget {
     }).toList());
   }
 }
+
 class TopicDrawer extends StatelessWidget {
   final List<Topic> topics;
   TopicDrawer({Key key, this.topics});

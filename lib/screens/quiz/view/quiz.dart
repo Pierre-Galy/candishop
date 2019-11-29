@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 // Shared Data
 class QuizState with ChangeNotifier {
-  
   double _progress = 0;
   Option _selected;
 
@@ -35,10 +34,9 @@ class QuizState with ChangeNotifier {
 }
 
 class QuizScreen extends StatelessWidget {
-
   QuizScreen({this.quizId});
   final String quizId;
-  
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -149,6 +147,7 @@ class CongratsPage extends StatelessWidget {
       ),
     );
   }
+
   /// Database write to update report doc when complete
   Future<void> _updateUserReport(Quiz quiz) {
     return Global.userRef.upsert(
@@ -163,7 +162,6 @@ class CongratsPage extends StatelessWidget {
 }
 
 class QuestionPage extends StatelessWidget {
-
   final Question question;
   QuestionPage({this.question});
 
